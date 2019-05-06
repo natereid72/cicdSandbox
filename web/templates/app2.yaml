@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+spec:
+  selector:
+    matchLabels:
+      app: app2
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      containers:
+      - name: app2
+        image: harbor.corp.local/corp-web/app2:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-deployment
+  labels:
+    app: app2
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: app2

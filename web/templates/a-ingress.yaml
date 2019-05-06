@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cluster-web-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /app1
+        backend:
+          serviceName: app1-deployment
+          servicePort: 80
+      - path: /app2
+        backend:
+          serviceName: app2-deployment
+          servicePort: 80
+
